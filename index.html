@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+
+        
+        <div id="view-1" class="container view-1 show-view">
+
+            <div class="header">
+                <div id="state-display">
+                    <div class="display-1">Alarm in
+                        <div>
+                        <span class="daysDisplay"><span>99</span> Days</span> 
+                        <span class="hoursDisplay"><span>99</span> Hours</span>
+                        <span class="minutesDisplay"><span>99</span> Minutes</span>
+                        </div>
+                        <div class="nextTriggerTime">Fri,20 Jan, 12:30</div>
+                    </div>
+                    <div class="display-2 visible">
+                        <span>All alarms are off</span>
+                    </div>
+                    
+
+                </div>
+                <div class="button-container"> 
+                <div class="two-buttons">
+                    <span class="plus-button">
+                            <img src="Images/plus.png" alt="">
+                        
+                    </span>
+                    <span class="elipsis-button">
+                        <img src="Images/ellipsis.png" alt="">
+                    
+                    </span>
+                </div>
+            </div>
+            </div>
+
+            <div class="alarm-container">
+                <!-- <div class="alarm">
+                    <span class="time-container"> <span class="hours">05</span>:<span class="minutes">00</span> </span>
+                    <span class="right-container"><span class="date"><span class="day">W</span><span class="day selected">W</span><span class="day selected">W</span><span class="day selected">W</span><span class="day selected">W</span><span class="day selected">W</span><span class="day selected">W</span></span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider round"></span>
+                      </label>
+                    </span>
+                </div> -->
+
+                <!-- <div class="alarm"></div>
+                <div class="alarm"></div>
+                <div class="alarm"></div>
+                <div class="alarm"></div>
+                <div class="alarm"></div>
+                <div class="alarm"></div>
+                <div class="alarm"></div>
+                <div class="alarm"></div>
+                <div class="alarm"></div>
+                <div class="alarm"></div>
+                <div class="alarm"></div> -->
+            </div>
+        </div>
+
+
+        <div id="view-2" class="container view-2">
+            <div class="view2Header">
+                <span class="time-input">
+                    <input class="hour-selector time-selector" type="number" value="00"> : <input class="minute-selector time-selector" type="number"  value="00">
+                </span>
+            </div>
+            <div class="options">
+                <div class="upper-container">
+                    <span class="date-display">Tommorrow-Tue,17 Jan</span>
+                    <input class="date-selector" type="date">
+                </div>
+                <div class="days-of-week">
+                    <button type="button" data-id="0">
+                        M
+                    </button>
+                    <button type="button" data-id="1">
+                        T
+                    </button>
+                    <button type="button" data-id="2">
+                        W
+                    </button>
+                    <button type="button" data-id="3">
+                        T
+                    </button>
+                    <button type="button" data-id="4">
+                        F
+                    </button>
+                    <button type="button" data-id="5">
+                        S
+                    </button>
+                    <button type="button" data-id="6">
+                        S
+                    </button>
+
+                </div>
+
+                <input type="text" class="alarm-name" placeholder="Alarm name">
+
+                <div class="toggle-option-container">
+                    <!-- toggle option -->
+                    <div class="toggle-option hasLine">
+                        <span class="description">
+                            <span class="title">Alarm sound</span>
+                            <div class="selected-option">Bixby alarm</div>
+                        </span>
+                        <span class="toggle-box">
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                              </label>
+                        </span>
+                    </div>
+
+                    <!-- toggle option -->
+                    <div class="toggle-option hasLine">
+                        <span class="description">
+                            <span class="title">Vibration</span>
+                            <div class="selected-option">Basic call</div>
+                        </span>
+                        <span class="toggle-box">
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                              </label>
+                        </span>
+                    </div>
+
+                    <!-- toggle option -->
+                    <div class="toggle-option">
+                        <span class="description">
+                            <span class="title">Snooze</span>
+                            <div class="selected-option">5 minutes,3 times</div>
+                        </span>
+                        <span class="toggle-box">
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                              </label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-button-container">
+                <button class="cancel">Cancel</button>
+                <button class="save">Save</button>
+            </div>
+
+        </div>
+
+          
+          
+        <script src="app.js"></script>
+    </body>
+</html>

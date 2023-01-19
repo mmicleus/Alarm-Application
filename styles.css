@@ -1,0 +1,402 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: sans-serif;
+}
+
+.view-1{
+  display:none;
+}
+
+.view-2{
+  display: none;
+}
+
+.show-view{
+  display:block;
+}
+
+.container{
+  /* position: relative; */
+    height:100vh;
+    background-color:rgb(240,240,240);
+    max-width:30em;
+    margin: 0 auto;
+    overflow-y:auto;
+}
+
+/* View 1 CSS */
+
+#state-display{
+  height: 25vh;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  font-size:1.5rem;
+  font-weight: 600;
+}
+
+ .display-1{
+  width:85%;
+  text-align:center;
+  display: none;
+}
+
+.daysDisplay,.minutesDisplay,.hoursDisplay{
+  display:none;
+}
+
+.display-1 .nextTriggerTime{
+    color:gray;
+    font-size:1rem;
+    font-weight:100;
+    margin-top:0.5rem;
+}
+
+.display-2{
+  width:85%;
+  text-align:center;
+  display:none;
+}
+
+.visible{
+  display:block;
+}
+
+.visible-span{
+  display:inline;
+}
+
+/* #state-display .display-1.visible{
+  display:block
+}
+
+#state-display .display-2.visible{
+  display:block
+} */
+
+
+
+.button-container{
+  display: flex;
+  justify-content: end;
+  padding-right: 1rem;
+}
+
+/* .fixed-nav {
+  position: sticky;
+  top: 0;
+  width: 100%;
+} */
+
+
+.two-buttons{
+    width:15%;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.plus-button img{
+  width:1.5rem;
+}
+
+.elipsis-button img{
+  width:1.5rem;
+}
+
+.alarm-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding:0.5em;
+    margin-top:1rem;
+    gap:1em;
+}
+
+.alarm{
+    height:7em;
+    background-color:white;
+    width:100%;
+    padding: 1em;
+
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alarm{
+    color:rgb(150,150,150);
+}
+
+.alarm .time-container{
+    font-size:2.5rem;
+}
+
+.alarm .date{
+    font-size: 0.9rem;
+    margin-right:1rem;
+}
+
+
+.alarm .day{
+  margin-left:0.2rem;
+  margin-right:0.2rem;
+}
+
+.alarm .day.selected{
+  color:#167a6d;
+  font-weight:bold;
+}
+
+
+
+/* View 2 CSS */
+
+.hour-selector{
+  
+}
+
+.minute-selector{
+  
+}
+
+.time-selector{
+  background:transparent;
+  border-style:none;
+}
+
+.view2Header{
+  height:25vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.time-input{
+  font-size:3rem;
+}
+
+.time-selector{
+  width:4.2rem;
+  font-size:3rem;
+}
+
+
+.options{
+  background-color:white;
+  border-radius:1rem;
+  padding:1rem;
+}
+
+.upper-container{
+  display: flex;
+  justify-content: space-between;
+
+}
+
+
+.date-selector{
+  width:1.1rem;
+  background:transparent;
+  border-style:none;
+}
+
+.days-of-week{
+  display: flex;
+  justify-content: space-between;
+  margin-top:1rem;
+  padding-left:0.5rem;
+  padding-right:0.5rem;
+}
+
+.days-of-week button{
+  background:transparent;
+  width:2rem;
+  height:2rem;
+  border-style:none;
+
+  /* testing */
+  /* padding-top:0.3rem; */
+}
+
+.days-of-week button.active{
+  padding:0.3rem;
+  border-radius:50%;
+  border:1px solid gray;
+}
+
+
+
+.days-of-week button:nth-of-type(7){
+  color:red;
+}
+
+.alarm-name{
+  width:100%;
+  margin-top:2rem;
+  border-width: 0 0 2px 0;
+}
+
+.alarm-name:focus{
+  outline:none;
+  border-style: none none solid none;
+  border-color:black;
+}
+
+
+.toggle-option-container{
+  margin-top:2rem;
+}
+
+.toggle-option{
+  display:flex;
+  justify-content:space-between;
+  align-items: center;
+  margin-top:0.7rem;
+  margin-bottom:0.7rem;
+}
+
+.toggle-option.hasLine{
+  border-bottom:1px solid rgb(240,240,240);
+  padding-bottom:0.7rem;
+}
+
+.toggle-option .selected-option{
+    font-size:0.8rem;
+    color:gray;
+    margin-top:0.3rem;
+}
+
+.toggle-box{
+  border-left-width: 1px;
+  border-left-style:solid;
+  padding-left:0.7rem;
+  border-color:rgb(240,240,240);
+}
+
+.bottom-button-container{
+  display: flex;
+  justify-content: space-around;
+  margin-top:1rem;
+}
+
+.bottom-button-container button{
+  background-color:transparent;
+  border-style:none;
+  font-size:1.3rem;
+}
+
+.bottom-button-container .cancel{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* The toggle switch */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 2.4rem;
+    height: 1.2rem;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 100%;
+    width: 50%;
+    left: 0;
+    bottom: 0;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  /* .slider:before {
+    position: absolute;
+    content: "";
+    height: 0.9rem;
+    width: 1.04rem;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  } */
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+
+  input:checked + .slider:before {
+    left:100%;
+    -webkit-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  
+  /* input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  } */
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+
+  /* End of toggle switch */
