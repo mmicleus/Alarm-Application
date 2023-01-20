@@ -2,8 +2,10 @@ const buttonContainer = document.querySelector(".button-container");
 const outerContainer = document.querySelector(".container");
 const alarmContainer = document.querySelector(".alarm-container");
 const plusButton = document.querySelector(".plus-button");
+const closeButton = document.querySelector(".close-button img");
 const view1 = document.getElementById("view-1");
 const view2 = document.getElementById("view-2");
+const view3 = document.getElementById("view-3");
 const hourSelect = document.querySelector(".hour-selector");
 const minuteSelect = document.querySelector(".minute-selector");
 const nameSelect = document.querySelector(".alarm-name");
@@ -20,14 +22,17 @@ const minutesDisplay = display1.querySelector(".minutesDisplay");
 const nextTriggerTimeDisplay = display1.querySelector(".nextTriggerTime");
 
 
+
+
 plusButton.addEventListener('click',addAlarm);
 hourSelect.addEventListener('change',hourChanged);
 minuteSelect.addEventListener('change',minutesChanged);
 dateSelect.addEventListener('change',dateChanged);
 nameSelect.addEventListener('change',setAlarmName);
-plusButton.addEventListener('click',addAlarm);
+// plusButton.addEventListener('click',addAlarm);
 saveButton.addEventListener('click',saveAlarm);
 cancelButton.addEventListener('click',cancel);
+closeButton.addEventListener('click',()=>{changeViews(view3,view1)})
 weekdays.forEach((day) => {
     day.addEventListener('click',toggleWeekday);
 })
@@ -215,7 +220,11 @@ function isTomorrow(date) {
 
   function createAlarmCopy(alrm){
     const aux = JSON.parse(JSON.stringify(alrm));
-    aux.date = new Date(Date.parse(aux.date));
+
+    if(aux.date){
+        aux.date = new Date(Date.parse(aux.date));
+    }
+    aux.nextTriggerTime = new Date(Date.parse(aux.nextTriggerTime));
 
     return aux;
   }
@@ -389,6 +398,15 @@ function resetApp(){
     addListeners();
 }
 
+function resetAppAfterToggle(){
+    // updateUpcomingAlarms(upcomingAlarms);
+    // alarms.sort(sortAlarms);
+    // getUpcomingAlarms(alarms);
+    // displayRemainingTime(upcomingAlarms);
+    renderAlarms();
+    addListeners();
+}
+
 // function getDays(remainingTime){
 //     let millisecondsInDay = 86400000;
 
@@ -414,6 +432,18 @@ function resetApp(){
 
 
 //View
+
+function insertDataIntoView3(triggeredAlarm){
+    const hours = document.querySelector('.view-3 .hh');
+    const minutes = document.querySelector('.view-3 .mm');
+    const date = document.querySelector('.view-3 .triggeredAlarmDate');
+    const name = document.querySelector('.view-3 .triggeredAlarmName');
+
+    hours.innerText = addZero(triggeredAlarm.hour);
+    minutes.innerText = addZero(triggeredAlarm.minute);
+    date.innerText = formatDate(triggeredAlarm.nextTriggerTime);
+    name.innerText = triggeredAlarm.name;
+}
 
 function displayRemainingTime(upcomingAlarms){
 
@@ -453,6 +483,11 @@ function displayRemainingTime(upcomingAlarms){
 
 }
 
+function turnOn(){
+    
+    console.log("clicked");
+}
+
 
 
 function renderAlarms(){
@@ -486,7 +521,7 @@ function renderAlarms(){
         //determine if the toggle is on or off
         let checkbox = "";
         if(item.enabled){
-            checkbox = '<input type="checkbox" checked>';
+            checkbox = '<input type="checkbox" class="checked">';
         }
         else{
             checkbox = '<input type="checkbox">';
@@ -498,7 +533,7 @@ function renderAlarms(){
         <span class="right-container"><span class="date">${content}</span>
         <label class="switch">
         ${checkbox}
-            <span class="slider round"></span>
+            <span class="alarmSlider slider round"></span>
           </label>
         </span>
     </div>`;
@@ -572,17 +607,20 @@ function updateWeekdaysView(){
 }
 
 
-function swapViews(){
+function swapViews(view1,view2){
     dateSelected = false;
 
     if(view1.classList.contains("show-view")){
-        view1.classList.remove("show-view");
-        view2.classList.add("show-view");
+        changeViews(view1,view2)
     }
     else{
-        view1.classList.add("show-view");
-        view2.classList.remove("show-view");
+        changeViews(view2,view1)
     }
+}
+
+function changeViews(hide,show){
+    hide.classList.remove("show-view");
+    show.classList.add("show-view");
 }
 
 
@@ -677,14 +715,45 @@ function addAlarm(){
     // insertAlarmData(defaultAlarm);
     // view1.classList.remove("show-view");
     // view2.classList.add("show-view");
-    swapViews();
+    swapViews(view1,view2);
 }
 
 function addListeners(){
     const htmlAlarms = document.querySelectorAll(".alarm-container .alarm");
+    const switches = document.querySelectorAll('.alarmSlider');
 
     htmlAlarms.forEach((item) => {
         item.addEventListener('click',loadAlarm);
+    })
+
+    switches.forEach((sw)=>{
+        sw.addEventListener('click',(e)=>{
+            e.stopPropagation();
+            console.log("clicked")
+        })
+    })
+
+    //add listeners to the slider on each alarm
+    htmlAlarms.forEach((htmlAlarm)=>{
+        const alrmIndex = parseInt(htmlAlarm.dataset.id,10);
+        const alarm = alarms[alrmIndex];
+        
+         const slider = htmlAlarm.querySelector('.alarmSlider');
+         
+        slider.addEventListener('click',(e) => {
+            if(alarm.enabled){
+                // come back
+            //     console.log("alarm disabled")
+                 alarm.enabled = false;
+                resetAppAfterToggle();
+            }
+            else{
+                // come back
+                // console.log("alarm enabled")
+                 alarm.enabled = true;
+                 resetAppAfterToggle();
+            }
+        })
     })
 }
 
@@ -706,17 +775,23 @@ function saveAlarm(){
 
     renderAlarms();
     addListeners();
-    swapViews();
+    swapViews(view1,view2);
 }
 
 function cancel(){
     reset();
-    swapViews();
+    swapViews(view1,view2);
 }
 
 
 
 function loadAlarm(e){
+
+    // console.log(e.target)
+    if(!e.target.classList.contains("alarm")){
+        return;
+    }
+
     dateSelected = false;
     alarmIndex = parseInt(e.currentTarget.dataset.id,10);
     
@@ -728,7 +803,7 @@ function loadAlarm(e){
     insertAlarmData();
     hourChanged();
     minutesChanged();
-    swapViews();
+    swapViews(view1,view2);
 }
 
 function timesMatch(upcomingAlarm){
@@ -745,6 +820,7 @@ function timesMatch(upcomingAlarm){
     return false;
 }
 
+
 function checkTime(){
     if(upcomingAlarms.length === 0)
     {
@@ -756,9 +832,9 @@ function checkTime(){
 
     if(timesMatch(upcomingAlarms[0])){
 
-
-            // clearInterval(intervalId);
-        console.log("It's tiiiiiiiiiiiiiiiime!");
+        const alarmCopy = createAlarmCopy(upcomingAlarms[0]);
+        insertDataIntoView3(alarmCopy)
+        changeViews(view1,view3)
         //update alarms
         resetApp();
     }

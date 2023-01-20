@@ -13,6 +13,10 @@
   display: none;
 }
 
+.view-3{
+  display:none;
+}
+
 .show-view{
   display:block;
 }
@@ -293,6 +297,61 @@
 }
 
 
+/* Alarm Trigger View */
+
+.alarmTriggerView{
+  height:100vh;
+  background: linear-gradient(to top, #c471f5 0%, #fa71cd 100%);
+  padding-top:9rem;
+  padding-bottom:9rem;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.alarmTriggerView .view3Header{
+  height:20vh;
+  display:flex;
+  flex-direction: column;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.triggerTimeContainer{
+  display:flex;
+  justify-content: space-between;
+
+
+  font-size:4rem;
+  color:white;
+}
+
+.triggeredAlarmDate{
+  margin-top:0.8rem;
+  font-size: 1rem;
+  color:white;
+  display:flex;
+  justify-content: center;
+}
+
+.triggeredAlarmName{
+  font-size: 1rem;
+  color:white;
+
+}
+
+.close-button{
+    text-align:center;
+
+}
+
+.close-button img{
+  height:4rem;
+  background-color:white;
+  padding:1rem;
+  border-radius:50%;
+}
+
 
 
 
@@ -368,7 +427,7 @@
     transition: .4s;
   } */
   
-  input:checked + .slider {
+  input.checked + .slider {
     background-color: #2196F3;
   }
   
@@ -376,7 +435,7 @@
     box-shadow: 0 0 1px #2196F3;
   }
 
-  input:checked + .slider:before {
+  input.checked + .slider:before {
     left:100%;
     -webkit-transform: translateX(-100%);
     -ms-transform: translateX(-100%);
