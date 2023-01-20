@@ -340,17 +340,35 @@ function computeDaysTillNextTrigger(alarm,daysLeftArray){
     }
 }
 
-function getUpcomingAlarms(alarms){
-    upcomingAlarms = [];
-    let minimumTriggerTime = alarms[0].nextTriggerTime.getTime();
+function getActiveAlarms(alarms){
+    let activeAlarms = [];
 
     alarms.forEach((item) => {
+        if(item.enabled){
+            activeAlarms.push(item)
+        }
+    })
+
+    return activeAlarms;
+}
+
+function getUpcomingAlarms(alarms){
+    upcomingAlarms = [];
+
+    const activeAlarms = getActiveAlarms(alarms);
+
+    if(activeAlarms.length === 0)
+        return;
+
+    let minimumTriggerTime = activeAlarms[0].nextTriggerTime.getTime();
+
+    activeAlarms.forEach((item) => {
         if(item.nextTriggerTime.getTime() < minimumTriggerTime){
             minimumTriggerTime = item.nextTriggerTime.getTime();
         }
     })
 
-    alarms.forEach((item) => {
+    activeAlarms.forEach((item) => {
         if(item.nextTriggerTime.getTime() == minimumTriggerTime){
             upcomingAlarms.push(item);
         }
@@ -401,10 +419,38 @@ function resetApp(){
 function resetAppAfterToggle(){
     // updateUpcomingAlarms(upcomingAlarms);
     // alarms.sort(sortAlarms);
-    // getUpcomingAlarms(alarms);
-    // displayRemainingTime(upcomingAlarms);
+    getUpcomingAlarms(alarms);
+    displayRemainingTime(upcomingAlarms);
     renderAlarms();
     addListeners();
+}
+
+function pastAlarmTriggerTime(alarm){
+    if((new Date().getTime() - alarm.nextTriggerTime.getTime()) > 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function reintroduceAlarm(alarm){
+    if(pastAlarmTriggerTime(alarm))
+    {
+        if(alarm.date){
+            if(isItToday(alarm)){
+                alarm.date = new Date();
+                calculateNextTriggerTime(alarm);
+            }
+            else{
+                alarm.date = getTomorrow(new Date());
+                calculateNextTriggerTime(alarm);
+            }
+        }
+        else{
+            calculateNextTriggerTime(alarm)
+        }
+    }
 }
 
 // function getDays(remainingTime){
@@ -720,18 +766,18 @@ function addAlarm(){
 
 function addListeners(){
     const htmlAlarms = document.querySelectorAll(".alarm-container .alarm");
-    const switches = document.querySelectorAll('.alarmSlider');
+    // const switches = document.querySelectorAll('.alarmSlider');
 
     htmlAlarms.forEach((item) => {
         item.addEventListener('click',loadAlarm);
     })
 
-    switches.forEach((sw)=>{
-        sw.addEventListener('click',(e)=>{
-            e.stopPropagation();
-            console.log("clicked")
-        })
-    })
+    // switches.forEach((sw)=>{
+    //     sw.addEventListener('click',(e)=>{
+    //         e.stopPropagation();
+    //         console.log("clicked")
+    //     })
+    // })
 
     //add listeners to the slider on each alarm
     htmlAlarms.forEach((htmlAlarm)=>{
@@ -745,12 +791,14 @@ function addListeners(){
                 // come back
             //     console.log("alarm disabled")
                  alarm.enabled = false;
+                 
                 resetAppAfterToggle();
             }
             else{
                 // come back
                 // console.log("alarm enabled")
                  alarm.enabled = true;
+                 reintroduceAlarm(alarm);
                  resetAppAfterToggle();
             }
         })
