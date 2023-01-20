@@ -47,6 +47,7 @@ const defaultAlarm = {
     // date:new Date(2023, 11, 31),
     days_of_week:[false,false,false,false,false,false,false],
     name:null,
+    enabled:true,
     nextTriggerTime:null
 }
 
@@ -66,8 +67,10 @@ function updateUpcomingAlarms(upcomingAlarms){
     upcomingAlarms.forEach((item) => {
         if(item.date){
             item.date = getTomorrow(item.date);
+            item.enabled = false;
             calculateNextTriggerTime(item);
         }
+        
         else{
             calculateNextTriggerTime(item);
         }
@@ -377,6 +380,15 @@ function getMinutes(remainingTime){
     return Math.ceil(remainingMillisecs / millisecondsInMinutes);
 }
 
+function resetApp(){
+    updateUpcomingAlarms(upcomingAlarms);
+    alarms.sort(sortAlarms);
+    getUpcomingAlarms(alarms);
+    displayRemainingTime(upcomingAlarms);
+    renderAlarms();
+    addListeners();
+}
+
 // function getDays(remainingTime){
 //     let millisecondsInDay = 86400000;
 
@@ -471,12 +483,21 @@ function renderAlarms(){
             content = elements.join("");
         }
 
+        //determine if the toggle is on or off
+        let checkbox = "";
+        if(item.enabled){
+            checkbox = '<input type="checkbox" checked>';
+        }
+        else{
+            checkbox = '<input type="checkbox">';
+        }
+
 
         return `<div class="alarm" data-id=${index}>
         <span class="time-container"> <span class="hours">${addZero(item.hour)}</span>:<span class="minutes">${addZero(item.minute)}</span> </span>
         <span class="right-container"><span class="date">${content}</span>
         <label class="switch">
-            <input type="checkbox" checked>
+        ${checkbox}
             <span class="slider round"></span>
           </label>
         </span>
@@ -731,16 +752,15 @@ function checkTime(){
         return;
     }
 
+    displayRemainingTime(upcomingAlarms);
+
     if(timesMatch(upcomingAlarms[0])){
 
-            clearInterval(intervalId);
+
+            // clearInterval(intervalId);
         console.log("It's tiiiiiiiiiiiiiiiime!");
         //update alarms
-        updateUpcomingAlarms(upcomingAlarms);
-
-
-        //rerender alarms
-        renderAlarms();
+        resetApp();
     }
 }
 
