@@ -9,6 +9,7 @@
   display:none;
 }
 
+
 .view-2{
   display: none;
 }
@@ -22,12 +23,20 @@
 }
 
 .container{
-  /* position: relative; */
+    /* position: relative;  */
     height:100vh;
     background-color:rgb(240,240,240);
     max-width:30em;
     margin: 0 auto;
     overflow-y:auto;
+}
+
+.container.view-1{
+  position: relative;
+}
+
+.container.view-2{
+  position: relative;
 }
 
 /* View 1 CSS */
@@ -154,6 +163,29 @@
   font-weight:bold;
 }
 
+.view-1 .alert-bar{
+  background-color:rgb(50,50,50);
+  border-radius:1rem;
+  color:white;
+  position:absolute;
+  left:50%;
+  transform: translateX(-50%);
+  width:80%;
+  padding:1rem;
+  opacity: 0;
+  transition:opacity 0.5s;
+  bottom:5%;
+}
+
+/* .view-1 .alert-bar:hover{
+  opacity: 90%;
+} */
+
+.view-1 .alert-bar.reveal{
+  opacity:90%;
+}
+
+
 
 
 /* View 2 CSS */
@@ -192,7 +224,28 @@
   background-color:white;
   border-radius:1rem;
   padding:1rem;
+  position:relative;
 }
+
+.view-2 .alert-bar{
+  background-color:rgb(50,50,50);
+  border-radius:1rem;
+  color:white;
+  position:absolute;
+  left:50%;
+  transform: translateX(-50%);
+  width:80%;
+  padding:1rem;
+  opacity: 0;
+  transition:opacity 0.5s;
+  bottom:5%;
+}
+
+.view-2 .alert-bar.reveal{
+  opacity:90%;
+}
+
+
 
 .upper-container{
   display: flex;
