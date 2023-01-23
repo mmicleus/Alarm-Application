@@ -32,6 +32,7 @@ hourSelect.addEventListener('change',hourChanged);
 minuteSelect.addEventListener('change',minutesChanged);
 dateSelect.addEventListener('change',dateChanged);
 nameSelect.addEventListener('change',setAlarmName);
+
 // plusButton.addEventListener('click',addAlarm);
 saveButton.addEventListener('click',saveAlarm);
 cancelButton.addEventListener('click',cancel);
@@ -293,7 +294,6 @@ function isTomorrow(date) {
     else{
         return wrongIndex - 1;
     }
-    
 }
 
 //inserts in the 'tab' array the number of days left from today till the other days of the week
@@ -652,8 +652,6 @@ function displayRemainingTime(upcomingAlarms){
             }
         }
     }
-
-
 }
 
 function turnOn(){
@@ -1081,6 +1079,7 @@ function checkTime(){
 
 
 let intervalId = setInterval(checkTime,1000);
+
 
 
 
